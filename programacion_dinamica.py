@@ -1,3 +1,5 @@
+import time
+
 def max_subarray_sum(arr):
     n = len(arr)
     dp = [0] * n
@@ -21,6 +23,13 @@ def max_subarray_sum(arr):
     return max_sum, max_subarray
 
 arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
-max_sum, subarray = max_subarray_sum(arr)
-print(max_sum)  # Imprimirá 6, que es la suma máxima de un subarreglo contiguo en arr
-print(subarray)  # Imprimirá [4, -1, 2, 1], que es el subarreglo que genera la suma máxima
+
+start_time = time.time()
+for x in range(0,1000):
+    max_sum, subarray = max_subarray_sum(arr)
+end_time = time.time()
+execution_time = end_time - start_time
+
+print("Suma máxima:", max_sum)
+print("Subarreglo:", subarray)
+print("Tiempo de ejecución:", execution_time, "segundos")
