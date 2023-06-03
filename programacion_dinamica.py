@@ -1,4 +1,5 @@
 import time
+import ast
 
 def max_subarray_sum(arr):
     n = len(arr)
@@ -22,14 +23,26 @@ def max_subarray_sum(arr):
     max_subarray = arr[start_index:end_index+1]
     return max_sum, max_subarray
 
-arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+with open('entrada.txt', 'r') as input_file, open('tiempos2.txt', 'w') as output_file:
+    for line in input_file:
+        try:
+            arr = ast.literal_eval(line.strip())
+            arr = list(map(int, arr))
 
-start_time = time.time()
-for x in range(0,1000):
-    max_sum, subarray = max_subarray_sum(arr)
-end_time = time.time()
-execution_time = end_time - start_time
+            start_time = time.time()
+            for x in range(0, 1000):
+                max_sum, subarray = max_subarray_sum(arr)
+            end_time = time.time()
+            execution_time = end_time - start_time
 
-print("Suma máxima:", max_sum)
-print("Subarreglo:", subarray)
-print("Tiempo de ejecución:", execution_time, "segundos")
+            output_file.write(str(execution_time) + '\n')
+
+            print("Arreglo de entrada:", arr)
+            print("Suma máxima:", max_sum)
+            print("Subarreglo:", subarray)
+            print("Tiempo de ejecución:", execution_time, "segundos")
+            print()
+        except Exception as e:
+            print("Error en la línea:", line)
+            print("Error:", e)
+            print()

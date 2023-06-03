@@ -1,4 +1,5 @@
 import time
+import ast
 
 def max_subarray_sum(arr):
     max_sum = float('-inf')  # Initialize the maximum sum to negative infinity
@@ -6,7 +7,8 @@ def max_subarray_sum(arr):
     start_index = 0  # Initialize the start index of the maximum subarray
     end_index = 0  # Initialize the end index of the maximum subarray
     temp_start_index = 0  # Temporary start index for updating the maximum subarray
-
+    current_sum = 0
+    
     for i in range(len(arr)):
         current_sum += arr[i]
 
@@ -23,14 +25,30 @@ def max_subarray_sum(arr):
     return max_sum, max_subarray
 
 
-arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+# Leer los arreglos desde el archivo de texto
+with open('entrada.txt', 'r') as file:
+    arrays = []
+    for line in file:
+        try:
+            arr = ast.literal_eval(line.strip())
+            arrays.append(arr)
+        except Exception as e:
+            print("Error en la línea:", line)
+            print("Error:", e)
+            print()
 
-start_time = time.time()
-for x in range(0,1000):
-    max_sum, subarray = max_subarray_sum(arr)
-end_time = time.time()
-execution_time = end_time - start_time
+with open('tiempos.txt', 'w') as output_file:
+    for arr in arrays:
+        start_time = time.time()
+        for x in range(0, 1000):
+            max_sum, subarray = max_subarray_sum(arr)
+        end_time = time.time()
+        execution_time = end_time - start_time
 
-print("Suma máxima:", max_sum)
-print("Subarreglo:", subarray)
-print("Tiempo de ejecución:", execution_time, "segundos")
+        output_file.write(str(execution_time) + '\n')
+
+        print("Arreglo de entrada:", arr)
+        print("Suma máxima:", max_sum)
+        print("Subarreglo:", subarray)
+        print("Tiempo de ejecución:", execution_time, "segundos")
+        print()
